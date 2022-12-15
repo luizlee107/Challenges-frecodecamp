@@ -1,5 +1,5 @@
-# Challenges-frecodecamp
-[Python] Challenges from FreeCodeCamp 
+# [Python] Challenges-frecodecamp
+Challenges from FreeCodeCamp 
 <br>
 URL:https://www.freecodecamp.org/learn/scientific-computing-with-python/
 <br>
