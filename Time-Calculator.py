@@ -1,7 +1,5 @@
 
 
-
-
 def add_time(time=0,add=0,week=0):
     all_week=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
     measure={}
@@ -16,19 +14,32 @@ def add_time(time=0,add=0,week=0):
     ad0=ad[0].split(':')
     hr_add=int(ad0[0])
     min_add=int(ad0[1])
-    
+   
     min_to_hr=int((min+min_add)/60)
     rest=(min+min_add)%60
 
-    hr=hr+min_to_hr+hr_add
-
-    measure['days']=int(hr/24)    
+    hr=hr+min_to_hr+hr_add    
+    
+    measure['days']=int(hr/24)
     
     for i,x in enumerate(all_week):
-        if week==x:
-            y=i+measure['days']            
-        if i==y:
-            measure['week']=x
+        if x == week:
+            numweek=i
+
+    cont=0
+    while True:        
+        cont=cont+1
+        for x in range(numweek,len(all_week)):
+            print(all_week[x],cont)
+            
+            if cont == measure['days']+20:
+                break
+        if cont == measure['days']:
+            break
+        
+    print('--'*20)
+  
+
             
     if measure['days'] == 1:
         measure['total_days']='(next day)'
@@ -54,7 +65,7 @@ def add_time(time=0,add=0,week=0):
 
     print(measure)
 
-add_time("11:30 AM","50:32", "Monday")
+add_time("11:30 AM","60:32", "Wednesday")
     
     
     
