@@ -1,71 +1,61 @@
 
 
-def add_time(time=0,add=0,week=0):
-    all_week=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-    measure={}
-    #time
-    t=time.split()
-    meridiem=str(t[1])
-    t0=t[0].split(':')
-    hr=int(t0[0])
-    min=int(t0[1])
-    #add
-    ad=add.split()
-    ad0=ad[0].split(':')
-    hr_add=int(ad0[0])
-    min_add=int(ad0[1])
-   
-    min_to_hr=int((min+min_add)/60)
-    rest=(min+min_add)%60
 
-    hr=hr+min_to_hr+hr_add    
-    
-    measure['days']=int(hr/24)
-    
-    for i,x in enumerate(all_week):
-        if x == week:
-            numweek=i
+class add_time(): 
+    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,hr_add=0,min_add=0):
+        self.hours=hours
+        self.add=add
+        self.week=week
+        self.hr=hr
+        self.min=min
+        self.hr_add=hr_add
+        self.min_add=min_add
+        self.measure={}
+        self.all_week=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
-    cont=0
-    while True:        
-        cont=cont+1
-        for x in range(numweek,len(all_week)):
-            print(all_week[x],cont)
-            
-            if cont == measure['days']+20:
-                break
-        if cont == measure['days']:
-            break
+    def __split_hours(self):
+        t=self.hours.split()
+        meridiem=str(t[1])
+        t0=t[0].split(':')
+        self.hr=int(t0[0])
+        self.min=int(t0[1])
+        return self.hr,self.min
+    
+    def __split_add(self):
+        ad=self.add.split()
+        ad0=ad[0].split(':')
+        self.hr_add=int(ad0[0])
+        self.min_add=int(ad0[1])
+        return self.hr_add,self.min_add
+    
+    def transform_time(self):
+        self.__split_hours()
+        self.__split_add()
+        min_to_hr=int((self.min+self.min_add)/60)
+        rest=(self.min+self.min_add)%60
+        return min_to_hr,rest
+    
+    def days(self):
         
-    print('--'*20)
-  
-
-            
-    if measure['days'] == 1:
-        measure['total_days']='(next day)'
+        hr=self.hr+min_to_hr+self.hr_add
+        measure['days']=int(hr/24)
         
-    if measure['days'] > 1:
-        measure['total_days']='('+str(measure['days'])+ ' days later'+')'
+    def transform_week(self):
+        for i,x in enumerate(self.all_week):
+            if x == self.week:
+                numweek=i
+        return numweek
+        
+        
+    def __str__(self):
+        return f'{self.hr}'  
 
-    
-    hr=int(hr%24)
-    if hr>=13:
-        hr=hr-12 
-        if meridiem =='AM':
-            meridiem ='PM'      
-        else:
-            meridiem ='AM'
-            
-
-    t1=str(hr)+':'+str(rest)+' '+meridiem
-    print(t1)
 
         
-    t1=str(hr)+':'+str(rest)+' '+meridiem
 
-    print(measure)
 
-add_time("11:30 AM","60:32", "Wednesday")
-    
-    
+a=add_time("11:30 AM","60:32", "Wednesday")
+
+
+
     
