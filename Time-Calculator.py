@@ -28,17 +28,19 @@ class add_time():
         self.min_add=int(ad0[1])
         return self.hr_add,self.min_add
     
-    def transform_time(self):
+    def __transform_time(self):
         self.__split_hours()
         self.__split_add()
         min_to_hr=int((self.min+self.min_add)/60)
         rest=(self.min+self.min_add)%60
         return min_to_hr,rest
     
-    def days(self):
-        
+    def total_days(self):
+        min_to_hr=self.__transform_time()[0]
         hr=self.hr+min_to_hr+self.hr_add
-        measure['days']=int(hr/24)
+        self.measure['days']=int(hr/24)
+        
+        
         
     def transform_week(self):
         for i,x in enumerate(self.all_week):
@@ -49,13 +51,13 @@ class add_time():
         
     def __str__(self):
         return f'{self.hr}'  
-
-
         
 
 
 a=add_time("11:30 AM","60:32", "Wednesday")
 
+
+a.total_days()
 
 
     
