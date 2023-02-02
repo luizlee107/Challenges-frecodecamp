@@ -1,8 +1,5 @@
-
-
-
 class add_time(): 
-    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,hr_add=0,min_add=0):
+    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,hr_add=0,min_add=0,days=0):
         self.hours=hours
         self.add=add
         self.week=week
@@ -10,7 +7,7 @@ class add_time():
         self.min=min
         self.hr_add=hr_add
         self.min_add=min_add
-        self.measure={}
+        self.days=days
         self.all_week=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
     def __split_hours(self):
@@ -32,32 +29,45 @@ class add_time():
         self.__split_hours()
         self.__split_add()
         min_to_hr=int((self.min+self.min_add)/60)
-        rest=(self.min+self.min_add)%60
-        return min_to_hr,rest
+        rest_min=(self.min+self.min_add)%60
+        self.min=rest_min
+        return min_to_hr,self.min
     
-    def total_days(self):
+    def __total_days_hours(self):
         min_to_hr=self.__transform_time()[0]
-        hr=self.hr+min_to_hr+self.hr_add
-        self.measure['days']=int(hr/24)
-        
+        total_hrs=self.hr+min_to_hr+self.hr_add
+        self.days=int(total_hrs/24)
+        self.hours=total_hrs%24
+        return self.days,self.hours
         
         
     def transform_week(self):
+        self.__total_days_hours()
+
         for i,x in enumerate(self.all_week):
             if x == self.week:
                 numweek=i
-        return numweek
-        
-        
+            
+        cont=0 
+        while True:        
+            for x in range(numweek,len(self.all_week)):
+                cont=cont+1
+                if cont == self.days+1:
+                    self.week=self.all_week[x]
+                    break
+            if cont == self.days+1:
+                break        
+        return self.week
+    
     def __str__(self):
         return f'{self.hr}'  
-        
+       
 
 
 a=add_time("11:30 AM","60:32", "Wednesday")
 
+a.transform_week()
 
-a.total_days()
 
 
     
