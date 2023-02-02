@@ -40,10 +40,19 @@ class add_time():
         self.hours=total_hrs%24
         return self.days,self.hours
         
+    def __meridiem(self):
+        self.__total_days_hours()
+        hr=int(hr%24)
+        if hr>=13:
+            hr=hr-12 
+        if meridiem =='AM':
+            meridiem ='PM'      
+        else:
+            meridiem ='AM'
+        
         
     def transform_week(self):
-        self.__total_days_hours()
-
+        self.__meridiem()
         for i,x in enumerate(self.all_week):
             if x == self.week:
                 numweek=i
@@ -66,7 +75,7 @@ class add_time():
 
 a=add_time("11:30 AM","60:32", "Wednesday")
 
-a.transform_week()
+
 
 
 
