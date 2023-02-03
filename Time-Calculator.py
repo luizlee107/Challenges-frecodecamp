@@ -1,10 +1,11 @@
 class add_time(): 
-    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,hr_add=0,min_add=0,days=0):
+    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,meridiem=0,hr_add=0,min_add=0,days=0):
         self.hours=hours
         self.add=add
         self.week=week
         self.hr=hr
         self.min=min
+        self.meridiem=meridiem
         self.hr_add=hr_add
         self.min_add=min_add
         self.days=days
@@ -12,11 +13,11 @@ class add_time():
 
     def __split_hours(self):
         t=self.hours.split()
-        meridiem=str(t[1])
+        self.meridiem=str(t[1])
         t0=t[0].split(':')
         self.hr=int(t0[0])
         self.min=int(t0[1])
-        return self.hr,self.min
+        return self.hr,self.min,self.meridiem
     
     def __split_add(self):
         ad=self.add.split()
@@ -37,19 +38,23 @@ class add_time():
         min_to_hr=self.__transform_time()[0]
         total_hrs=self.hr+min_to_hr+self.hr_add
         self.days=int(total_hrs/24)
+        
         self.hours=total_hrs%24
         return self.days,self.hours
         
-    def __meridiem(self):
+    def change_meridiem(self):
         self.__total_days_hours()
-        hr=int(hr%24)
-        if hr>=13:
-            hr=hr-12 
-        if meridiem =='AM':
-            meridiem ='PM'      
-        else:
-            meridiem ='AM'
-        
+        print(self.hours,self.meridiem)
+        if self.hours >= 13 and self.hours < 24:
+            self.hours=self.hours-12 
+            if self.meridiem =='AM':
+                self.meridiem ='PM' 
+             
+        elif self.hours >= 24:
+            self.hours = self.hours-24
+            if self.meridiem =='PM':
+                self.meridiem ='AM' 
+        return print(self.hours,self.meridiem)
         
     def transform_week(self):
         self.__meridiem()
@@ -73,8 +78,8 @@ class add_time():
        
 
 
-a=add_time("11:30 AM","60:32", "Wednesday")
-
+a=add_time("11:30 AM","73:32", "Wednesday")
+a.change_meridiem()
 
 
 
