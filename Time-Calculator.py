@@ -1,5 +1,5 @@
 class add_time(): 
-    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,meridiem=0,hr_add=0,min_add=0,days=0):
+    def __init__(self,hours=0,add=0,week=0,hr=0,min=0,meridiem=0,hr_add=0,min_add=0,days=0,total_days=0):
         self.hours=hours
         self.add=add
         self.week=week
@@ -9,6 +9,7 @@ class add_time():
         self.hr_add=hr_add
         self.min_add=min_add
         self.days=days
+        self.total_days=total_days
         self.all_week=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
     def __split_hours(self):
@@ -42,7 +43,7 @@ class add_time():
         self.hours=total_hrs%24
         return self.days,self.hours
         
-    def change_meridiem(self):
+    def __change_meridiem(self):
         self.__total_days_hours()
         print(self.hours,self.meridiem)
         if self.hours >= 13 and self.hours < 24:
@@ -50,14 +51,10 @@ class add_time():
             if self.meridiem =='AM':
                 self.meridiem ='PM' 
              
-        elif self.hours >= 24:
-            self.hours = self.hours-24
-            if self.meridiem =='PM':
-                self.meridiem ='AM' 
         return print(self.hours,self.meridiem)
         
-    def transform_week(self):
-        self.__meridiem()
+    def __transform_week(self):
+        self.__change_meridiem()
         for i,x in enumerate(self.all_week):
             if x == self.week:
                 numweek=i
@@ -73,13 +70,22 @@ class add_time():
                 break        
         return self.week
     
+    def printing(self):
+        self.__transform_week()
+        if self.days == 1:
+            self.total_days='(next day)'
+        if self.days > 1:
+            self.total_days='('+str(self.days)+ ' days later'+')'
+
+        
+        
     def __str__(self):
-        return f'{self.hr}'  
+        return f'{self.hours}'  
        
 
 
-a=add_time("11:30 AM","73:32", "Wednesday")
-a.change_meridiem()
+a=add_time("11:30 AM","201:32", "Wednesday")
+a.printing()
 
 
 
