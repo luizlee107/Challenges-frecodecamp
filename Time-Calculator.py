@@ -45,13 +45,13 @@ class add_time():
         
     def __change_meridiem(self):
         self.__total_days_hours()
-        print(self.hours,self.meridiem)
+
         if self.hours >= 13 and self.hours < 24:
             self.hours=self.hours-12 
             if self.meridiem =='AM':
                 self.meridiem ='PM' 
              
-        return print(self.hours,self.meridiem)
+        return self.hours,self.meridiem
         
     def __transform_week(self):
         self.__change_meridiem()
@@ -70,22 +70,23 @@ class add_time():
                 break        
         return self.week
     
-    def printing(self):
+    def __total_days(self):
         self.__transform_week()
         if self.days == 1:
             self.total_days='(next day)'
         if self.days > 1:
-            self.total_days='('+str(self.days)+ ' days later'+')'
-
-        
+            self.total_days='('+str(self.days)+ ' days later'+')'        
         
     def __str__(self):
-        return f'{self.hours}'  
-       
+        self.__total_days()
+        if self.days == 0:
+            return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'
+        
 
 
-a=add_time("11:30 AM","201:32", "Wednesday")
-a.printing()
+a=add_time("11:30 AM","0:32", "Wednesday")
+print(a)
+
 
 
 
