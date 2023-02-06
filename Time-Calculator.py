@@ -54,8 +54,9 @@ class add_time():
         return self.hours,self.meridiem
     
     def __format_string(self):
-        return self.week[0].upper() + self.week[1:].lower()    
-        
+        self.week = self.week[0].upper() + self.week[1:].lower()    
+        return self.week
+    
     def __transform_week(self):
         self.__change_meridiem()
         
@@ -95,7 +96,7 @@ class add_time():
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f', {self.week}'+f' {self.total_days}'
         if self.days > 0 and self.week ==0:
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f' {self.total_days}'
-            
+           
 
 a=add_time("11:30 AM","113:32")
 print(a)
