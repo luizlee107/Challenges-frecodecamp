@@ -55,37 +55,46 @@ class add_time():
         
     def __transform_week(self):
         self.__change_meridiem()
-        for i,x in enumerate(self.all_week):
-            if x == self.week:
-                numweek=i
-            
-        cont=0 
-        while True:        
-            for x in range(numweek,len(self.all_week)):
-                cont=cont+1
+        if self.week !=0:
+            for i,x in enumerate(self.all_week):
+                if x == self.week:
+                    numweek=i            
+            cont=0 
+            while True:        
+                for x in range(numweek,len(self.all_week)):
+                    cont=cont+1
+                    if cont == self.days+1:
+                        self.week=self.all_week[x]
+                        break
                 if cont == self.days+1:
-                    self.week=self.all_week[x]
-                    break
-            if cont == self.days+1:
-                break        
+                    break        
         return self.week
     
     def __total_days(self):
         self.__transform_week()
         if self.days == 1:
-            self.total_days='(next day)'
+            self.total_days=str('(next day)')
         if self.days > 1:
-            self.total_days='('+str(self.days)+ ' days later'+')'        
+            self.total_days='('+str(self.days)+ ' days later'+')'
+            
+        return self.total_days
         
     def __str__(self):
         self.__total_days()
+            
+        if self.days == 0 and self.week != 0:
+            return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f', {self.week}'
         if self.days == 0:
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'
-        
-
-
-a=add_time("11:30 AM","0:32", "Wednesday")
+        if self.days > 0 and self.week !=0:
+            return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f', {self.week}'+f' {self.total_days}'
+        if self.days > 0 and self.week ==0:
+            return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f' {self.total_days}'
+            
+            
+a=add_time("11:30 AM","113:32")
 print(a)
+
 
 
 
