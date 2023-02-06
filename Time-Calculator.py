@@ -26,7 +26,7 @@ class add_time():
         self.hr_add=int(ad0[0])
         self.min_add=int(ad0[1])
         return self.hr_add,self.min_add
-    
+
     def __transform_time(self):
         self.__split_hours()
         self.__split_add()
@@ -52,10 +52,15 @@ class add_time():
                 self.meridiem ='PM' 
              
         return self.hours,self.meridiem
+    
+    def __format_string(self):
+        return self.week[0].upper() + self.week[1:].lower()    
         
     def __transform_week(self):
         self.__change_meridiem()
+        
         if self.week !=0:
+            self.__format_string()
             for i,x in enumerate(self.all_week):
                 if x == self.week:
                     numweek=i            
@@ -91,7 +96,7 @@ class add_time():
         if self.days > 0 and self.week ==0:
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f' {self.total_days}'
             
-            
+
 a=add_time("11:30 AM","113:32")
 print(a)
 
