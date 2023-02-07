@@ -65,6 +65,7 @@ class add_time():
             for i,x in enumerate(self.all_week):
                 if x == self.week:
                     numweek=i            
+                    print(f'numweek:{numweek}')
             cont=0 
             while True:        
                 for x in range(numweek,len(self.all_week)):
@@ -78,8 +79,10 @@ class add_time():
     
     def __total_days(self):
         self.__transform_week()
+        print(self.days)
         if self.days == 1:
             self.total_days=str('(next day)')
+
         if self.days > 1:
             self.total_days='('+str(self.days)+ ' days later'+')'
             
@@ -96,9 +99,9 @@ class add_time():
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f', {self.week}'+f' {self.total_days}'
         if self.days > 0 and self.week ==0:
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f' {self.total_days}'
-           
-
-a=add_time("11:30 AM","113:32")
+            
+       
+a=add_time("11:30 PM","60:32","Sunday")
 print(a)
 
 
