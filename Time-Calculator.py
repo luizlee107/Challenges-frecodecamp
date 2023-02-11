@@ -59,22 +59,21 @@ class add_time():
     
     def __transform_week(self):
         self.__change_meridiem()
-        
-        if self.week !=0:
-            self.__format_string()
-            for i,x in enumerate(self.all_week):
-                if x == self.week:
-                    numweek=i            
-                    print(f'numweek:{numweek}')
-            cont=0 
-            while True:        
-                for x in range(numweek,len(self.all_week)):
-                    cont=cont+1
-                    if cont == self.days+1:
-                        self.week=self.all_week[x]
-                        break
-                if cont == self.days+1:
-                    break        
+        self.__format_string()
+
+        for i,x in enumerate(self.all_week):
+            if x == self.week:
+                numweek=i            
+        cont=0 
+        while True:        
+            for x in range(numweek,len(self.all_week)):
+                cont=cont+1
+                numweek=0
+                if cont == self.days:
+                    self.week=self.all_week[x]                    
+                    break
+            if cont == self.days:
+                break        
         return self.week
     
     def __total_days(self):
@@ -100,8 +99,9 @@ class add_time():
         if self.days > 0 and self.week ==0:
             return f'{self.hours}' + ':' + '{:02.0f}'.format(self.min) +f' {self.meridiem}'+f' {self.total_days}'
             
-       
-a=add_time("11:30 PM","60:32","Sunday")
+            
+
+a=add_time("11:30 PM","150:32","Sunday")
 print(a)
 
 
